@@ -13,7 +13,6 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
 
 @interface KRVideoPlayerController ()
 
-@property (nonatomic, strong) KRVideoPlayerControlView *videoControl;
 @property (nonatomic, strong) UIView *movieBackgroundView;
 @property (nonatomic, assign) BOOL isFullscreenMode;
 @property (nonatomic, assign) CGRect originFrame;
