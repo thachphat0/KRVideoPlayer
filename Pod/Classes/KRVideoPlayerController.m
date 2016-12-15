@@ -169,40 +169,45 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
 }
 
 - (void)fullScreenButtonClick {
+    [self fullScreenButtonClick:M_PI_2];
+}
+
+- (void)fullScreenButtonClick:(double)angle {
     if (self.isFullscreenMode) {
         return;
     }
-    [self rotateLandscapeLeft];
+    self.originFrame = self.view.frame;
+    CGFloat height = [[UIScreen mainScreen] bounds].size.width;
+    CGFloat width = [[UIScreen mainScreen] bounds].size.height;
+    CGRect frame = CGRectMake((height - width) / 2, (width - height) / 2, width, height);;
+    [UIView animateWithDuration:0.3f animations:^{
+        self.frame = frame;
+        [self.view setTransform:CGAffineTransformMakeRotation(angle)];
+    } completion:^(BOOL finished) {
+        self.isFullscreenMode = YES;
+        self.videoControl.fullScreenButton.hidden = YES;
+        self.videoControl.shrinkScreenButton.hidden = NO;
+    }];
 }
 
 - (void)rotateLandscapeLeft {
-    self.originFrame = self.view.frame;
-    CGFloat height = [[UIScreen mainScreen] bounds].size.width;
-    CGFloat width = [[UIScreen mainScreen] bounds].size.height;
-    CGRect frame = CGRectMake((height - width) / 2, (width - height) / 2, width, height);;
-    [UIView animateWithDuration:0.3f animations:^{
-        self.frame = frame;
-        [self.view setTransform:CGAffineTransformMakeRotation(M_PI_2)];
-    } completion:^(BOOL finished) {
-        self.isFullscreenMode = YES;
-        self.videoControl.fullScreenButton.hidden = YES;
-        self.videoControl.shrinkScreenButton.hidden = NO;
-    }];
+    if (self.isFullscreenMode) {
+        [UIView animateWithDuration:0.3f animations:^{
+            [self.view setTransform:CGAffineTransformMakeRotation(M_PI_2)];
+        } completion:nil];
+    } else {
+        [self fullScreenButtonClick];
+    }
 }
 
 - (void)rotateLandscapeRight {
-    self.originFrame = self.view.frame;
-    CGFloat height = [[UIScreen mainScreen] bounds].size.width;
-    CGFloat width = [[UIScreen mainScreen] bounds].size.height;
-    CGRect frame = CGRectMake((height - width) / 2, (width - height) / 2, width, height);;
-    [UIView animateWithDuration:0.3f animations:^{
-        self.frame = frame;
-        [self.view setTransform:CGAffineTransformMakeRotation(-M_PI_2)];
-    } completion:^(BOOL finished) {
-        self.isFullscreenMode = YES;
-        self.videoControl.fullScreenButton.hidden = YES;
-        self.videoControl.shrinkScreenButton.hidden = NO;
-    }];
+    if (self.isFullscreenMode) {
+        [UIView animateWithDuration:0.3f animations:^{
+            [self.view setTransform:CGAffineTransformMakeRotation(-M_PI_2)];
+        } completion:nil];
+    } else {
+        [self fullScreenButtonClick:-M_PI_2];
+    }
 }
 
 - (void)shrinkScreenButtonClick

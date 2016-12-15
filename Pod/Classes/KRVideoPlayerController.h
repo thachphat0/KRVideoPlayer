@@ -19,6 +19,7 @@
 - (void)showInWindow;
 - (void)dismiss;
 - (void)fullScreenButtonClick;
+- (void)fullScreenButtonClick:(double)angle;
 - (void)rotateLandscapeRight;
 - (void)rotateLandscapeLeft;
 - (void)shrinkScreenButtonClick;
