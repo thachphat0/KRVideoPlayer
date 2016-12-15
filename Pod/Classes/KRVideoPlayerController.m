@@ -168,11 +168,14 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
     [self dismiss];
 }
 
-- (void)fullScreenButtonClick
-{
+- (void)fullScreenButtonClick {
     if (self.isFullscreenMode) {
         return;
     }
+    [self rotateLandscapeLeft];
+}
+
+- (void)rotateLandscapeLeft {
     self.originFrame = self.view.frame;
     CGFloat height = [[UIScreen mainScreen] bounds].size.width;
     CGFloat width = [[UIScreen mainScreen] bounds].size.height;
@@ -180,6 +183,21 @@ static const CGFloat kVideoPlayerControllerAnimationTimeInterval = 0.3f;
     [UIView animateWithDuration:0.3f animations:^{
         self.frame = frame;
         [self.view setTransform:CGAffineTransformMakeRotation(M_PI_2)];
+    } completion:^(BOOL finished) {
+        self.isFullscreenMode = YES;
+        self.videoControl.fullScreenButton.hidden = YES;
+        self.videoControl.shrinkScreenButton.hidden = NO;
+    }];
+}
+
+- (void)rotateLandscapeRight {
+    self.originFrame = self.view.frame;
+    CGFloat height = [[UIScreen mainScreen] bounds].size.width;
+    CGFloat width = [[UIScreen mainScreen] bounds].size.height;
+    CGRect frame = CGRectMake((height - width) / 2, (width - height) / 2, width, height);;
+    [UIView animateWithDuration:0.3f animations:^{
+        self.frame = frame;
+        [self.view setTransform:CGAffineTransformMakeRotation(-M_PI_2)];
     } completion:^(BOOL finished) {
         self.isFullscreenMode = YES;
         self.videoControl.fullScreenButton.hidden = YES;
