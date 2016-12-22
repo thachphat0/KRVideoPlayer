@@ -23,5 +23,7 @@
 - (void)rotateLandscapeRight;
 - (void)rotateLandscapeLeft;
 - (void)shrinkScreenButtonClick;
+- (void)playButtonClick;
+- (void)pauseButtonClick;
 
 @end
